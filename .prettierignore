@@ -1,0 +1,9 @@
+node_modules
+.next
+storage
+public
+package-lock.json
+next-env.d.ts
+*.tsbuildinfo
+prisma/schema.prisma
+.env*

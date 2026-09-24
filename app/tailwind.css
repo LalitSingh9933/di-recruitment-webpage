@@ -1,0 +1,6 @@
+/* Incremental adoption: retain the existing reset and avoid legacy class collisions. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) important;
+@source "../components";
+@source "./";

@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id           Int           @id @default(autoincrement())
+  title        String
+  slug         String        @unique
+  company      String
+  country      String
+  city         String?
+  category     String
+  type         String        @default("Full-time")
+  salary       String?
+  imageUrl     String?       @db.VarChar(2048)
+  vacancies    Int           @default(1)
+  description  String        @db.Text
+  requirements String        @db.Text
+  featured     Boolean       @default(false)
+  active       Boolean       @default(true)
+  expiresAt    DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+
+  @@index([country])
+  @@index([category])
+}
+
+model Application {
+  id          Int               @id @default(autoincrement())
+  fullName    String
+  email       String
+  phone       String
+  nationality String            @default("Nepalese")
+  experience  Int?
+  message     String?           @db.Text
+  cvUrl       String?
+  status      ApplicationStatus @default(RECEIVED)
+  jobId       Int
+  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+
+  @@index([jobId])
+  @@index([email])
+}
+
+// Albums are event folders; each media record belongs to exactly one album.
+model GalleryAlbum {
+  id           Int            @id @default(autoincrement())
+  title        String         @db.VarChar(180)
+  slug         String         @unique @db.VarChar(180)
+  description  String         @db.Text
+  eventDate    DateTime?      @db.Date
+  published    Boolean        @default(false)
+  displayOrder Int            @default(0)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  media        GalleryMedia[]
+
+  @@index([published, displayOrder])
+}
+
+model GalleryMedia {
+  id           Int          @id @default(autoincrement())
+  albumId      Int
+  album        GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  storageKey   String       @unique @db.VarChar(100)
+  originalName String       @db.VarChar(255)
+  mimeType     String       @db.VarChar(80)
+  size         Int
+  caption      String       @default("") @db.VarChar(500)
+  displayOrder Int          @default(0)
+  createdAt    DateTime     @default(now())
+
+  @@index([albumId, displayOrder])
+}
+
+model ContentPage {
+  imageUrl  String?  @db.VarChar(2048)
+  slug      String   @id @db.VarChar(80)
+  title     String   @db.VarChar(180)
+  content   String   @db.LongText
+  updatedAt DateTime @updatedAt
+}
+
+model LegalDocument {
+  id           Int     @id @default(autoincrement())
+  title        String  @db.VarChar(180)
+  url          String  @db.VarChar(2048)
+  displayOrder Int     @default(0)
+  published    Boolean @default(false)
+}
+
+model TeamMember {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(120)
+  position     String   @db.VarChar(120)
+  bio          String   @db.Text
+  photoUrl     String?  @db.VarChar(2048)
+  displayOrder Int      @default(0)
+  published    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, displayOrder])
+}
+
+model BlogPost {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(180)
+  slug      String   @unique @db.VarChar(180)
+  excerpt   String   @db.Text
+  imageUrl  String?  @db.VarChar(2048)
+  content   String   @db.LongText
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, createdAt])
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  passwordHash String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model CarouselSlide {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(180)
+  imageUrl     String   @db.VarChar(2048)
+  displayOrder Int      @default(0)
+  published    Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, displayOrder])
+}
+
+model Testimonial {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(100)
+  position     String   @db.VarChar(180)
+  quote        String   @db.Text
+  displayOrder Int      @default(0)
+  published    Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, displayOrder])
+}
+
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  fullName  String   @db.VarChar(100)
+  email     String   @db.VarChar(254)
+  phone     String   @db.VarChar(30)
+  subject   String   @db.VarChar(180)
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([email, createdAt])
+}
+
+// Fixed-window counters shared by every application instance; no raw email/IP stored.
+model RateLimit {
+  key       String   @id @db.VarChar(64)
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+enum ApplicationStatus {
+  RECEIVED
+  REVIEWING
+  SHORTLISTED
+  REJECTED
+  PLACED
+}

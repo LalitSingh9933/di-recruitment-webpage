@@ -1,0 +1,88 @@
+/* Keep Facebook's 180–500 px plugin inside a responsive dashboard card. */
+.dashboard-facebook {
+  margin-top: 24px;
+}
+
+/* Public homepage placement shares the feed without requiring an admin session. */
+.homepage-facebook .dashboard-facebook {
+  margin-top: 0;
+}
+
+.facebook-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 500px);
+  align-items: start;
+  gap: 32px;
+  padding: 28px;
+}
+
+.facebook-summary {
+  max-width: 360px;
+}
+
+.facebook-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  color: white;
+  background: #1877f2;
+  margin-bottom: 22px;
+}
+
+.facebook-summary h3 {
+  font-size: 23px;
+}
+
+.facebook-summary p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.facebook-summary .facebook-help {
+  font-size: 12px;
+  margin-top: 24px;
+}
+
+.facebook-help a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.facebook-frame {
+  width: 100%;
+  max-width: 500px;
+  min-height: 620px;
+  overflow: hidden;
+  background: #f4f7fa;
+  border-radius: 6px;
+}
+
+.facebook-frame iframe {
+  display: block;
+  border: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .facebook-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .facebook-summary {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .facebook-content {
+    padding: 16px;
+  }
+
+  .dashboard-facebook .card-title {
+    flex-direction: column;
+    gap: 14px;
+  }
+}

@@ -1,0 +1,10 @@
+:root {
+  --font-body: "Segoe UI", Arial, sans-serif;
+  --font-display: "Aptos Display", "Segoe UI", Arial, sans-serif;
+}
+
+.login-visual {
+  background-image:
+    linear-gradient(140deg, rgba(6, 31, 53, 0.92), rgba(21, 79, 123, 0.65)),
+    url("/images/recruitment-hero.png");
+}

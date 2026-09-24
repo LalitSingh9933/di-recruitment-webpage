@@ -1,0 +1,30 @@
+.password-visibility {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.form-success {
+  padding: 14px;
+  color: #17683d;
+  background: #e8f7ef;
+}
+
+.team-upload-preview {
+  display: block;
+  width: 180px;
+  height: 210px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.admin-sidebar {
+  overflow-y: auto;
+}
