@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import logo from '@/storage/team/logo.png'
+import logo from '../storage/team/logo.png'
 
 const aboutLinks = [
   ["/about/introduction", "Introduction"],

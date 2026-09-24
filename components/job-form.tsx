@@ -104,10 +104,10 @@ export function JobForm({ job = {} }: { job?: JobInput }) {
           <input type="checkbox" name="active" defaultChecked={job.active ?? true} />{" "}
           Published and visible
         </label>
-        <label>
+        {/* <label>
           <input type="checkbox" name="featured" defaultChecked={job.featured} /> Featured
           opportunity
-        </label>
+        </label> */}
       </div>
       <div className="form-actions">
         <a className="btn btn-outline" href="/admin/jobs">

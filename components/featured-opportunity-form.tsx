@@ -25,6 +25,7 @@ export function FeaturedOpportunityForm({
             minLength={3}
             maxLength={180}
             defaultValue={entry?.title}
+        
           />
         </label>
         <label>
@@ -41,7 +42,7 @@ export function FeaturedOpportunityForm({
         <div className="form-row">
           <label>
             Short badge (for example GR)
-            <input name="badge" required maxLength={8} defaultValue={entry?.badge} />
+            <input name="badge" required maxLength={10} defaultValue={entry?.badge} />
           </label>
           <label>
             Location
