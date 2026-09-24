@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from '../storage/team/logo.png'
+import logo from '@/public/images/logo.png'
 import {
   ArrowRight,
   BadgeCheck,
